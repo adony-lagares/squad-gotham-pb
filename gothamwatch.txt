@@ -95,6 +95,18 @@ Todos os merges passaram por Pull Request com validação da QA antes do merge n
 
 #7. Cronograma e Sprints
 
+| Sprint    | Objetivo                   | Entregas                                      |
+|-----------|----------------------------|-----------------------------------------------|
+| Sprint 1  | MVP do sistema             | Backend + API de alertas + testes funcionais  |
+| Sprint 2  | Frontend + Mobile          | Painel web com mapa + app com push            |
+| Sprint 3  | Escalabilidade e segurança | Testes de carga, segurança e ajustes          |
+
+
 ------------------------------------------------------------
 
 #8. Conclusão da Sprint
+
+A Squad concluiu com sucesso a Sprint 1, entregando um sistema funcional, testado e versionado corretamente. O uso de Gitflow, boas práticas de QA e documentação permitiu simular com fidelidade o contexto de uma consultoria digital moderna.
+
+Frase da Hera Venenosa, QA Sênior:
+ "A única coisa mais perigosa que um bug... é um bug em produção. Mas isso não acontecerá sob minha vigilância."
