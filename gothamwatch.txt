@@ -1,0 +1,24 @@
+#1. Visão Geral do Projeto
+
+A Secretaria de Segurança de Gotham City contratou a Wayne Solutions, uma consultoria digital especializada em soluções críticas, para desenvolver o Gotham Alert — um sistema inteligente de monitoramento de riscos e emissão de alertas em tempo real.
+
+O objetivo é permitir que cidadãos, polícia e o próprio Batman sejam notificados sobre eventos de risco como: ações criminosas, zonas de perigo, picos de aglomeração ou atividades de vilões.
+
+------------------------------------------------------------
+
+#2. Requisitos Técnicos
+
+O projeto possui requisitos técnicos definidos em backlog e documentados no Confluence.
+
+Requisitos Funcionais:
+
+RF-01 - O sistema deve permitir registro automático de eventos com geolocalização  
+RF-02 - O sistema deve enviar alertas push para dispositivos móveis  
+RF-03 - O painel web deve exibir os alertas em tempo real em um mapa interativo  
+
+Requisitos Não Funcionais:
+
+RNF-01 - A latência máxima para disparo de alertas deve ser de 3 segundos  
+RNF-02 - O sistema deve suportar até 10.000 usuários simultâneos  
+RNF-03 - O tráfego entre microserviços deve ser criptografado (HTTPS + JWT)
+
