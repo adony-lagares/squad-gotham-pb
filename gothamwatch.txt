@@ -22,3 +22,31 @@ RNF-01 - A latência máxima para disparo de alertas deve ser de 3 segundos
 RNF-02 - O sistema deve suportar até 10.000 usuários simultâneos  
 RNF-03 - O tráfego entre microserviços deve ser criptografado (HTTPS + JWT)
 
+------------------------------------------------------------
+
+#3. Arquitetura e Desenvolvimento
+A arquitetura segue o padrão de microsserviços e utiliza tecnologias modernas e escaláveis:
+
+| Componente     | Tecnologia                                  | Observações                                |
+| -------------- | ------------------------------------------- | ------------------------------------------ |
+| Backend API    | Node.js + Express                           | Serviços REST com autenticação JWT         |
+| Banco de Dados | MongoDB                                     | Alta performance em leitura e escrita      |
+| Frontend Web   | React + Leaflet                             | Visualização georreferenciada de alertas   |
+| App Mobile     | React Native                                | Suporte Android/iOS com push notifications |
+| DevOps         | Docker + GitHub Actions + Azure App Service | CI/CD automatizado                         |
+
+Todos os repositórios foram versionados com Git, utilizando GitFlow, branches padronizadas e revisão via Pull Request.
+
+------------------------------------------------------------
+
+#4. Estratégia de QA
+A Squad aplicou uma estratégia de testes robusta, liderada por Hera Venenosa, a QA Sênior do time. A atuação de QA ocorreu desde a Sprint 0 com a definição de critérios de aceite, criação de plano de testes e testes automatizados.
+
+##Plano de Testes
+| Tipo                     | Ferramenta                          | Status      |
+| ------------------------ | ----------------------------------- | ----------- |
+| Funcional (APIs)         | Postman / Newman                    | Executado   |
+| Performance              | JMeter                              | Executado   |
+| Segurança                | OWASP ZAP                           | Executado   |
+| Exploratório             | Manual                              | Executado   |
+| Regressão automatizada   | Newman (CI/CD) | CConfigurada       | Configurada |
