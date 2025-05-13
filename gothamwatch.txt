@@ -49,4 +49,52 @@ A Squad aplicou uma estratégia de testes robusta, liderada por Hera Venenosa, a
 | Performance              | JMeter                              | Executado   |
 | Segurança                | OWASP ZAP                           | Executado   |
 | Exploratório             | Manual                              | Executado   |
-| Regressão automatizada   | Newman (CI/CD) | CConfigurada       | Configurada |
+| Regressão automatizada   | Newman (CI/CD) | Configurada        | Configurada |
+
+------------------------------------------------------------
+
+#5. Bugs e Incidentes
+Durante os testes, foram encontrados problemas reais que simularam desafios de uma consultoria em produção:
+
+|ID               | Tipo        | Descrição                  | Gravidade | Status                                 |
+| --------------- | ----------- | -------------------------- | --------- |--------------------------------------- |
+| BUG-GA-001      | Segurança   |JWT exposto em logs         | Alta      | Resolvido                              |
+| BUG-GA-002      | Performance | Delay de 7s sob carga      | Crítica   | Corrigido com cache Redis              |
+|INCIDENTE-GA-003 | Processo    | Push direto na main sem PR | Média     | Processo ajustado com branch protection|
+
+------------------------------------------------------------
+
+#6. Organização do Repositório
+O projeto foi versionado no GitHub com uma estrutura padrão de consultoria:
+pgsql
+
+CopyEdit
+
+Documentos/ 
+├── Planejamento_Testes/ 
+│   └── Plano_Sprint1.md 
+├── Collections_Postman/ 
+│   └── GothamAlert.postman_collection.json
+├── Evidencias/ 
+│   └── Teste_Carga_JMeter.csv 
+├── Mapas_Mentais/ 
+│   └── Gotham_QA_Fluxo.mm
+    └── historia.txt 
+
+##Gitflow Aplicado
+| Branch                | Uso                       |
+| --------------------- | --------------------------|
+| main                  | Versão aprovada e testada |
+| develop               | Integração da sprint      |
+| feature/nomedousuario | Implementação individual  |
+| hotfix/               | Correções emergenciais    |
+
+Todos os merges passaram por Pull Request com validação da QA antes do merge na main.
+
+------------------------------------------------------------
+
+#7. Cronograma e Sprints
+
+------------------------------------------------------------
+
+#8. Conclusão da Sprint
