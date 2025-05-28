@@ -1,0 +1,27 @@
+Pontos onde o Amazon Q foi efetivo:
+
+1. Identificação de problemas de reutilização no código original
+
+2. Parametrização das keywords para aceitar argumentos personalizáveis
+
+3. Implementação de valores padrão para facilitar o uso das keywords
+
+4. Criação de estrutura para separar dados de teste do código
+
+5. Adição de keywords de alto nível para fluxos completos
+
+6. Implementação de retorno de valores para encadeamento de operações
+
+7. Refatoração dos testes para independência entre cenários
+
+Pontos onde o Amazon Q não foi tão efetivo:
+
+1. Inicialmente não forneceu arquivos completos, apenas trechos de código
+
+2. Gerou código com erros de sintaxe na primeira versão (duplicação de código)
+
+3. Não considerou completamente o contexto do projeto ao sugerir mudanças
+
+4. Não explicou detalhadamente o impacto das mudanças na execução dos testes
+
+5. Não forneceu exemplos de como executar os testes após as modificações
