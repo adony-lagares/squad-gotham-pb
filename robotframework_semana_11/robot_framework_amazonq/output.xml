@@ -1,0 +1,968 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.2.2 (Python 3.13.2 on linux)" generated="2025-05-26T17:30:40.656894" rpa="false" schemaversion="5">
+<suite id="s1" name="Test Api" source="/mnt/d/estagio_compass_uol/documentos/sprint-06/semana_11_testes_automatizados_de_api_rest_com_robot_framework/robot_test_api/test/test_api.robot">
+<kw name="Create Session" owner="RequestsLibrary" type="SETUP">
+<msg time="2025-05-26T17:30:40.885369" level="INFO">Creating Session using : alias=restful, url=https://restful-booker.herokuapp.com, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>restful</arg>
+<arg>${BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-05-26T17:30:40.885043" elapsed="0.005677"/>
+</kw>
+<test id="s1-t1" name="POTS - Login com Sucesso" line="10">
+<kw name="Autenticar Usuario" owner="keywords">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-05-26T17:30:40.893597" level="INFO">${body} = {'username': 'admin', 'password': 'password123'}</msg>
+<var>${body}</var>
+<arg>username=${USERNAME}</arg>
+<arg>password=${PASSWORD}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-05-26T17:30:40.893017" elapsed="0.003764"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-05-26T17:30:42.634617" level="INFO">POST Request : url=https://restful-booker.herokuapp.com/auth 
+ path_url=/auth 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '48', 'Content-Type': 'application/json'} 
+ body=b'{"username": "admin", "password": "password123"}' 
+ </msg>
+<msg time="2025-05-26T17:30:42.635451" level="INFO">POST Response : url=https://restful-booker.herokuapp.com/auth 
+ status=200, reason=OK 
+ headers={'Content-Length': '27', 'Content-Type': 'application/json; charset=utf-8', 'Date': 'Mon, 26 May 2025 20:30:41 GMT', 'Etag': 'W/"1b-0HGSYnDwk3c1t1zr4Dg1k7YMZLg"', 'Nel': '{"report_to":"heroku-nel","response_headers":["Via"],"max_age":3600,"success_fraction":0.01,"failure_fraction":0.1}', 'Report-To': '{"group":"heroku-nel","endpoints":[{"url":"https://nel.heroku.com/reports?s=fFnedJjuACYADPN2Lxec7AEa6epUQgkt82JWkMlXQdo%3D\\u0026sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add\\u0026ts=1748291440"}],"max_age":3600}', 'Reporting-Endpoints': 'heroku-nel="https://nel.heroku.com/reports?s=fFnedJjuACYADPN2Lxec7AEa6epUQgkt82JWkMlXQdo%3D&amp;sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&amp;ts=1748291440"', 'Server': 'Heroku', 'Via': '1.1 heroku-router', 'X-Powered-By': 'Express'} 
+ body={"token":"3a9f7831f03f07f"} 
+ </msg>
+<msg time="2025-05-26T17:30:42.636044" level="INFO">/home/marcosdev03/miniconda3/envs/ambiente_compasso/lib/python3.13/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host 'restful-booker.herokuapp.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(</msg>
+<msg time="2025-05-26T17:30:42.637131" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>restful</arg>
+<arg>/auth</arg>
+<arg>json=${body}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-05-26T17:30:40.897126" elapsed="1.740437"/>
+</kw>
+<kw name="Set Test Variable" owner="BuiltIn">
+<msg time="2025-05-26T17:30:42.641438" level="INFO">${AUTH_RESPONSE} = &lt;Response [200]&gt;</msg>
+<arg>${AUTH_RESPONSE}</arg>
+<arg>${response}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<status status="PASS" start="2025-05-26T17:30:42.638963" elapsed="0.002913"/>
+</kw>
+<status status="PASS" start="2025-05-26T17:30:40.892382" elapsed="1.749754"/>
+</kw>
+<kw name="Validar Status Code 200" owner="keywords">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-05-26T17:30:42.646038" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-05-26T17:30:42.644595" elapsed="0.001852"/>
+</kw>
+<arg>${AUTH_RESPONSE}</arg>
+<status status="PASS" start="2025-05-26T17:30:42.643199" elapsed="0.004754"/>
+</kw>
+<kw name="Extrair Token" owner="keywords">
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2025-05-26T17:30:42.651904" level="INFO">${token} = 3a9f7831f03f07f</msg>
+<var>${token}</var>
+<arg>${response.json()}</arg>
+<arg>token</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2025-05-26T17:30:42.650597" elapsed="0.001667"/>
+</kw>
+<kw name="Set Test Variable" owner="BuiltIn">
+<msg time="2025-05-26T17:30:42.653339" level="INFO">${token} = 3a9f7831f03f07f</msg>
+<arg>${token}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<status status="PASS" start="2025-05-26T17:30:42.652747" elapsed="0.000904"/>
+</kw>
+<return>
+<value>${token}</value>
+<status status="PASS" start="2025-05-26T17:30:42.653889" elapsed="0.000363"/>
+</return>
+<msg time="2025-05-26T17:30:42.656490" level="INFO">${token} = 3a9f7831f03f07f</msg>
+<var>${token}</var>
+<arg>${AUTH_RESPONSE}</arg>
+<status status="PASS" start="2025-05-26T17:30:42.649592" elapsed="0.007681"/>
+</kw>
+<status status="PASS" start="2025-05-26T17:30:40.891146" elapsed="1.768512"/>
+</test>
+<test id="s1-t2" name="GET - Listar Reservas Com Sucesso" line="16">
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2025-05-26T17:30:42.813248" level="INFO">GET Request : url=https://restful-booker.herokuapp.com/booking 
+ path_url=/booking 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2025-05-26T17:30:42.814054" level="INFO">GET Response : url=https://restful-booker.herokuapp.com/booking 
+ status=200, reason=OK 
+ headers={'Content-Length': '179', 'Content-Type': 'application/json; charset=utf-8', 'Date': 'Mon, 26 May 2025 20:30:42 GMT', 'Etag': 'W/"b3-nt9tIKSW3OiaDWyx3jE5pG3zbzM"', 'Nel': '{"report_to":"heroku-nel","response_headers":["Via"],"max_age":3600,"success_fraction":0.01,"failure_fraction":0.1}', 'Report-To': '{"group":"heroku-nel","endpoints":[{"url":"https://nel.heroku.com/reports?s=AeEZWu%2Ft8RTFwKN272SMi%2FRWsYe1%2F%2Fwef%2F%2BNtFRNbK0%3D\\u0026sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add\\u0026ts=1748291442"}],"max_age":3600}', 'Reporting-Endpoints': 'heroku-nel="https://nel.heroku.com/reports?s=AeEZWu%2Ft8RTFwKN272SMi%2FRWsYe1%2F%2Fwef%2F%2BNtFRNbK0%3D&amp;sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&amp;ts=1748291442"', 'Server': 'Heroku', 'Via': '1.1 heroku-router', 'X-Powered-By': 'Express'} 
+ body=[{"bookingid":4},{"bookingid":9},{"bookingid":2},{"bookingid":7},{"bookingid":5},{"bookingid":6},{"bookingid":1},{"bookingid":10},{"bookingid":8},{"bookingid":11},{"bookingid":3}] 
+ </msg>
+<msg time="2025-05-26T17:30:42.814442" level="INFO">/home/marcosdev03/miniconda3/envs/ambiente_compasso/lib/python3.13/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host 'restful-booker.herokuapp.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(</msg>
+<msg time="2025-05-26T17:30:42.815001" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>restful</arg>
+<arg>/booking</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-05-26T17:30:42.661815" elapsed="0.153426"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-05-26T17:30:42.819403" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-05-26T17:30:42.817464" elapsed="0.002706"/>
+</kw>
+<kw name="To Json" owner="RequestsLibrary">
+<msg time="2025-05-26T17:30:42.824555" level="WARN">Keyword 'RequestsLibrary.To Json' is deprecated. Please use ${resp.json()} instead. Have a look at the improved HTML output as pretty printing replacement.</msg>
+<msg time="2025-05-26T17:30:42.829032" level="INFO">To JSON using : content=[{"bookingid":4},{"bookingid":9},{"bookingid":2},{"bookingid":7},{"bookingid":5},{"bookingid":6},{"bookingid":1},{"bookingid":10},{"bookingid":8},{"bookingid":11},{"bookingid":3}] </msg>
+<msg time="2025-05-26T17:30:42.829687" level="INFO">To JSON using : pretty_print=False </msg>
+<msg time="2025-05-26T17:30:42.830200" level="INFO">${lista_de_reservas} = [{'bookingid': 4}, {'bookingid': 9}, {'bookingid': 2}, {'bookingid': 7}, {'bookingid': 5}, {'bookingid': 6}, {'bookingid': 1}, {'bookingid': 10}, {'bookingid': 8}, {'bookingid': 11}, {'bookingid': 3}]</msg>
+<var>${lista_de_reservas}</var>
+<arg>${response.content}</arg>
+<doc>*DEPRECATED* Please use ${resp.json()} instead. Have a look at the improved HTML output as pretty printing replacement.</doc>
+<status status="PASS" start="2025-05-26T17:30:42.823835" elapsed="0.006643"/>
+</kw>
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${lista_de_reservas} != []</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2025-05-26T17:30:42.832249" elapsed="0.001405"/>
+</kw>
+<status status="PASS" start="2025-05-26T17:30:42.661077" elapsed="0.173577"/>
+</test>
+<test id="s1-t3" name="POST - Montar Reserva Com Sucesso" line="23">
+<kw name="Montar Corpo Da Reserva" owner="keywords">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-05-26T17:30:42.839465" level="INFO">${bookingdates} = {'checkin': '2018-01-01', 'checkout': '2019-01-01'}</msg>
+<var>${bookingdates}</var>
+<arg>checkin=2018-01-01</arg>
+<arg>checkout=2019-01-01</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-05-26T17:30:42.838962" elapsed="0.000831"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-05-26T17:30:42.841928" level="INFO">${body} = {'firstname': 'jim', 'lastname': 'brown', 'totalprice': 111, 'depositpaid': True, 'bookingdates': {'checkin': '2018-01-01', 'checkout': '2019-01-01'}, 'additionalneeds': 'Breakfast'}</msg>
+<var>${body}</var>
+<arg>firstname=jim</arg>
+<arg>lastname=brown</arg>
+<arg>totalprice=${111}</arg>
+<arg>depositpaid=${True}</arg>
+<arg>bookingdates=${bookingdates}</arg>
+<arg>additionalneeds=Breakfast</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-05-26T17:30:42.840180" elapsed="0.002097"/>
+</kw>
+<kw name="Set Test Variable" owner="BuiltIn">
+<msg time="2025-05-26T17:30:42.845335" level="INFO">${POST_BODY} = {'firstname': 'jim', 'lastname': 'brown', 'totalprice': 111, 'depositpaid': True, 'bookingdates': {'checkin': '2018-01-01', 'checkout': '2019-01-01'}, 'additionalneeds': 'Breakfast'}</msg>
+<arg>${POST_BODY}</arg>
+<arg>${body}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<status status="PASS" start="2025-05-26T17:30:42.843054" elapsed="0.004594"/>
+</kw>
+<status status="PASS" start="2025-05-26T17:30:42.838363" elapsed="0.009610"/>
+</kw>
+<kw name="Enviar Requisicao POST Reserva" owner="keywords">
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-05-26T17:30:42.849232" level="INFO">{'firstname': 'jim', 'lastname': 'brown', 'totalprice': 111, 'depositpaid': True, 'bookingdates': {'checkin': '2018-01-01', 'checkout': '2019-01-01'}, 'additionalneeds': 'Breakfast'}</msg>
+<arg>${POST_BODY}</arg>
+<arg>console=yes</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-05-26T17:30:42.848938" elapsed="0.000534"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-05-26T17:30:42.998142" level="INFO">POST Request : url=https://restful-booker.herokuapp.com/booking 
+ path_url=/booking 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '182', 'Content-Type': 'application/json'} 
+ body=b'{"firstname": "jim", "lastname": "brown", "totalprice": 111, "depositpaid": true, "bookingdates": {"checkin": "2018-01-01", "checkout": "2019-01-01"}, "additionalneeds": "Breakfast"}' 
+ </msg>
+<msg time="2025-05-26T17:30:42.998661" level="INFO">POST Response : url=https://restful-booker.herokuapp.com/booking 
+ status=200, reason=OK 
+ headers={'Content-Length': '195', 'Content-Type': 'application/json; charset=utf-8', 'Date': 'Mon, 26 May 2025 20:30:42 GMT', 'Etag': 'W/"c3-ibKN7pRn633IBy/hAMU11cGSuTE"', 'Nel': '{"report_to":"heroku-nel","response_headers":["Via"],"max_age":3600,"success_fraction":0.01,"failure_fraction":0.1}', 'Report-To': '{"group":"heroku-nel","endpoints":[{"url":"https://nel.heroku.com/reports?s=AeEZWu%2Ft8RTFwKN272SMi%2FRWsYe1%2F%2Fwef%2F%2BNtFRNbK0%3D\\u0026sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add\\u0026ts=1748291442"}],"max_age":3600}', 'Reporting-Endpoints': 'heroku-nel="https://nel.heroku.com/reports?s=AeEZWu%2Ft8RTFwKN272SMi%2FRWsYe1%2F%2Fwef%2F%2BNtFRNbK0%3D&amp;sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&amp;ts=1748291442"', 'Server': 'Heroku', 'Via': '1.1 heroku-router', 'X-Powered-By': 'Express'} 
+ body={"bookingid":13,"booking":{"firstname":"jim","lastname":"brown","totalprice":111,"depositpaid":true,"bookingdates":{"checkin":"2018-01-01","checkout":"2019-01-01"},"additionalneeds":"Breakfast"}} 
+ </msg>
+<msg time="2025-05-26T17:30:42.999054" level="INFO">/home/marcosdev03/miniconda3/envs/ambiente_compasso/lib/python3.13/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host 'restful-booker.herokuapp.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(</msg>
+<msg time="2025-05-26T17:30:43.001046" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>restful</arg>
+<arg>/booking</arg>
+<arg>json=${POST_BODY}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-05-26T17:30:42.849647" elapsed="0.152057"/>
+</kw>
+<kw name="Set Test Variable" owner="BuiltIn">
+<msg time="2025-05-26T17:30:43.004232" level="INFO">${POST_RESPONSE} = &lt;Response [200]&gt;</msg>
+<arg>${POST_RESPONSE}</arg>
+<arg>${response}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.002270" elapsed="0.002454"/>
+</kw>
+<status status="PASS" start="2025-05-26T17:30:42.848470" elapsed="0.156517"/>
+</kw>
+<kw name="Verificar Status code 200" owner="keywords">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-05-26T17:30:43.007579" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.006573" elapsed="0.001567"/>
+</kw>
+<arg>${POST_RESPONSE}</arg>
+<status status="PASS" start="2025-05-26T17:30:43.005645" elapsed="0.003188"/>
+</kw>
+<kw name="Verificar Se Contem BookingID" owner="keywords">
+<kw name="To Json" owner="RequestsLibrary">
+<msg time="2025-05-26T17:30:43.012255" level="WARN">Keyword 'RequestsLibrary.To Json' is deprecated. Please use ${resp.json()} instead. Have a look at the improved HTML output as pretty printing replacement.</msg>
+<msg time="2025-05-26T17:30:43.013446" level="INFO">To JSON using : content={"bookingid":13,"booking":{"firstname":"jim","lastname":"brown","totalprice":111,"depositpaid":true,"bookingdates":{"checkin":"2018-01-01","checkout":"2019-01-01"},"additionalneeds":"Breakfast"}} </msg>
+<msg time="2025-05-26T17:30:43.013656" level="INFO">To JSON using : pretty_print=False </msg>
+<msg time="2025-05-26T17:30:43.013866" level="INFO">${json} = {'bookingid': 13, 'booking': {'firstname': 'jim', 'lastname': 'brown', 'totalprice': 111, 'depositpaid': True, 'bookingdates': {'checkin': '2018-01-01', 'checkout': '2019-01-01'}, 'additionalneeds': '...</msg>
+<var>${json}</var>
+<arg>${response.content}</arg>
+<doc>*DEPRECATED* Please use ${resp.json()} instead. Have a look at the improved HTML output as pretty printing replacement.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.012053" elapsed="0.003972"/>
+</kw>
+<kw name="Dictionary Should Contain Key" owner="Collections">
+<arg>${json}</arg>
+<arg>bookingid</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.016588" elapsed="0.000526"/>
+</kw>
+<arg>${POST_RESPONSE}</arg>
+<status status="PASS" start="2025-05-26T17:30:43.011065" elapsed="0.006509"/>
+</kw>
+<status status="PASS" start="2025-05-26T17:30:42.836427" elapsed="0.183092"/>
+</test>
+<test id="s1-t4" name="GET - Validar Reserva Criada Pelo ID" line="30">
+<kw name="Montar Corpo Da Reserva" owner="keywords">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-05-26T17:30:43.022394" level="INFO">${bookingdates} = {'checkin': '2018-01-01', 'checkout': '2019-01-01'}</msg>
+<var>${bookingdates}</var>
+<arg>checkin=2018-01-01</arg>
+<arg>checkout=2019-01-01</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.022041" elapsed="0.000495"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-05-26T17:30:43.023573" level="INFO">${body} = {'firstname': 'jim', 'lastname': 'brown', 'totalprice': 111, 'depositpaid': True, 'bookingdates': {'checkin': '2018-01-01', 'checkout': '2019-01-01'}, 'additionalneeds': 'Breakfast'}</msg>
+<var>${body}</var>
+<arg>firstname=jim</arg>
+<arg>lastname=brown</arg>
+<arg>totalprice=${111}</arg>
+<arg>depositpaid=${True}</arg>
+<arg>bookingdates=${bookingdates}</arg>
+<arg>additionalneeds=Breakfast</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.022795" elapsed="0.001002"/>
+</kw>
+<kw name="Set Test Variable" owner="BuiltIn">
+<msg time="2025-05-26T17:30:43.024903" level="INFO">${POST_BODY} = {'firstname': 'jim', 'lastname': 'brown', 'totalprice': 111, 'depositpaid': True, 'bookingdates': {'checkin': '2018-01-01', 'checkout': '2019-01-01'}, 'additionalneeds': 'Breakfast'}</msg>
+<arg>${POST_BODY}</arg>
+<arg>${body}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.024049" elapsed="0.001056"/>
+</kw>
+<status status="PASS" start="2025-05-26T17:30:43.021549" elapsed="0.003735"/>
+</kw>
+<kw name="Enviar Requisicao POST Reserva" owner="keywords">
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-05-26T17:30:43.029323" level="INFO">{'firstname': 'jim', 'lastname': 'brown', 'totalprice': 111, 'depositpaid': True, 'bookingdates': {'checkin': '2018-01-01', 'checkout': '2019-01-01'}, 'additionalneeds': 'Breakfast'}</msg>
+<arg>${POST_BODY}</arg>
+<arg>console=yes</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.028809" elapsed="0.001096"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-05-26T17:30:43.176192" level="INFO">POST Request : url=https://restful-booker.herokuapp.com/booking 
+ path_url=/booking 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '182', 'Content-Type': 'application/json'} 
+ body=b'{"firstname": "jim", "lastname": "brown", "totalprice": 111, "depositpaid": true, "bookingdates": {"checkin": "2018-01-01", "checkout": "2019-01-01"}, "additionalneeds": "Breakfast"}' 
+ </msg>
+<msg time="2025-05-26T17:30:43.176580" level="INFO">POST Response : url=https://restful-booker.herokuapp.com/booking 
+ status=200, reason=OK 
+ headers={'Content-Length': '195', 'Content-Type': 'application/json; charset=utf-8', 'Date': 'Mon, 26 May 2025 20:30:42 GMT', 'Etag': 'W/"c3-iZQaL5EIxEtkSOiMuHYfq7HbBxw"', 'Nel': '{"report_to":"heroku-nel","response_headers":["Via"],"max_age":3600,"success_fraction":0.01,"failure_fraction":0.1}', 'Report-To': '{"group":"heroku-nel","endpoints":[{"url":"https://nel.heroku.com/reports?s=AeEZWu%2Ft8RTFwKN272SMi%2FRWsYe1%2F%2Fwef%2F%2BNtFRNbK0%3D\\u0026sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add\\u0026ts=1748291442"}],"max_age":3600}', 'Reporting-Endpoints': 'heroku-nel="https://nel.heroku.com/reports?s=AeEZWu%2Ft8RTFwKN272SMi%2FRWsYe1%2F%2Fwef%2F%2BNtFRNbK0%3D&amp;sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&amp;ts=1748291442"', 'Server': 'Heroku', 'Via': '1.1 heroku-router', 'X-Powered-By': 'Express'} 
+ body={"bookingid":16,"booking":{"firstname":"jim","lastname":"brown","totalprice":111,"depositpaid":true,"bookingdates":{"checkin":"2018-01-01","checkout":"2019-01-01"},"additionalneeds":"Breakfast"}} 
+ </msg>
+<msg time="2025-05-26T17:30:43.176781" level="INFO">/home/marcosdev03/miniconda3/envs/ambiente_compasso/lib/python3.13/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host 'restful-booker.herokuapp.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(</msg>
+<msg time="2025-05-26T17:30:43.177853" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>restful</arg>
+<arg>/booking</arg>
+<arg>json=${POST_BODY}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.030269" elapsed="0.147826"/>
+</kw>
+<kw name="Set Test Variable" owner="BuiltIn">
+<msg time="2025-05-26T17:30:43.179251" level="INFO">${POST_RESPONSE} = &lt;Response [200]&gt;</msg>
+<arg>${POST_RESPONSE}</arg>
+<arg>${response}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.178379" elapsed="0.001052"/>
+</kw>
+<status status="PASS" start="2025-05-26T17:30:43.028060" elapsed="0.151677"/>
+</kw>
+<kw name="Extrair BookingID" owner="keywords">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-05-26T17:30:43.183928" level="INFO">${dados_da_reserva} = {'bookingid': 16, 'booking': {'firstname': 'jim', 'lastname': 'brown', 'totalprice': 111, 'depositpaid': True, 'bookingdates': {'checkin': '2018-01-01', 'checkout': '2019-01-01'}, 'additionalneeds': '...</msg>
+<var>${dados_da_reserva}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.182811" elapsed="0.001385"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-05-26T17:30:43.184793" level="INFO">{'bookingid': 16, 'booking': {'firstname': 'jim', 'lastname': 'brown', 'totalprice': 111, 'depositpaid': True, 'bookingdates': {'checkin': '2018-01-01', 'checkout': '2019-01-01'}, 'additionalneeds': 'Breakfast'}}</msg>
+<arg>${dados_da_reserva}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.184484" elapsed="0.000528"/>
+</kw>
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2025-05-26T17:30:43.185725" level="INFO">${id_da_reserva} = 16</msg>
+<var>${id_da_reserva}</var>
+<arg>${dados_da_reserva}</arg>
+<arg>bookingid</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.185310" elapsed="0.000601"/>
+</kw>
+<kw name="Set Test Variable" owner="BuiltIn">
+<msg time="2025-05-26T17:30:43.187221" level="INFO">${booking_id} = 16</msg>
+<arg>${booking_id}</arg>
+<arg>${id_da_reserva}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.186173" elapsed="0.002068"/>
+</kw>
+<arg>${POST_RESPONSE}</arg>
+<status status="PASS" start="2025-05-26T17:30:43.181783" elapsed="0.007086"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2025-05-26T17:30:43.339647" level="INFO">GET Request : url=https://restful-booker.herokuapp.com/booking/16 
+ path_url=/booking/16 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2025-05-26T17:30:43.341552" level="INFO">GET Response : url=https://restful-booker.herokuapp.com/booking/16 
+ status=200, reason=OK 
+ headers={'Content-Length': '168', 'Content-Type': 'application/json; charset=utf-8', 'Date': 'Mon, 26 May 2025 20:30:42 GMT', 'Etag': 'W/"a8-9heAEFrqmY/9mDO6bwwf9fFhwRg"', 'Nel': '{"report_to":"heroku-nel","response_headers":["Via"],"max_age":3600,"success_fraction":0.01,"failure_fraction":0.1}', 'Report-To': '{"group":"heroku-nel","endpoints":[{"url":"https://nel.heroku.com/reports?s=AeEZWu%2Ft8RTFwKN272SMi%2FRWsYe1%2F%2Fwef%2F%2BNtFRNbK0%3D\\u0026sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add\\u0026ts=1748291442"}],"max_age":3600}', 'Reporting-Endpoints': 'heroku-nel="https://nel.heroku.com/reports?s=AeEZWu%2Ft8RTFwKN272SMi%2FRWsYe1%2F%2Fwef%2F%2BNtFRNbK0%3D&amp;sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&amp;ts=1748291442"', 'Server': 'Heroku', 'Via': '1.1 heroku-router', 'X-Powered-By': 'Express'} 
+ body={"firstname":"jim","lastname":"brown","totalprice":111,"depositpaid":true,"bookingdates":{"checkin":"2018-01-01","checkout":"2019-01-01"},"additionalneeds":"Breakfast"} 
+ </msg>
+<msg time="2025-05-26T17:30:43.342206" level="INFO">/home/marcosdev03/miniconda3/envs/ambiente_compasso/lib/python3.13/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host 'restful-booker.herokuapp.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(</msg>
+<msg time="2025-05-26T17:30:43.343637" level="INFO">${GET_RESPONSE} = &lt;Response [200]&gt;</msg>
+<var>${GET_RESPONSE}</var>
+<arg>restful</arg>
+<arg>/booking/${booking_id}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.192066" elapsed="0.152040"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-05-26T17:30:43.346955" level="INFO">${dados_reserva} = {'firstname': 'jim', 'lastname': 'brown', 'totalprice': 111, 'depositpaid': True, 'bookingdates': {'checkin': '2018-01-01', 'checkout': '2019-01-01'}, 'additionalneeds': 'Breakfast'}</msg>
+<var>${dados_reserva}</var>
+<arg>${GET_RESPONSE.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.345190" elapsed="0.002277"/>
+</kw>
+<kw name="Dictionary Should Contain Item" owner="Collections">
+<arg>${dados_reserva}</arg>
+<arg>firstname</arg>
+<arg>jim</arg>
+<doc>An item of ``key`` / ``value`` must be found in a ``dictionary``.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.348220" elapsed="0.000792"/>
+</kw>
+<kw name="Dictionary Should Contain Item" owner="Collections">
+<arg>${dados_reserva}</arg>
+<arg>lastname</arg>
+<arg>brown</arg>
+<doc>An item of ``key`` / ``value`` must be found in a ``dictionary``.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.349778" elapsed="0.000710"/>
+</kw>
+<status status="PASS" start="2025-05-26T17:30:43.020680" elapsed="0.331879"/>
+</test>
+<test id="s1-t5" name="PUT - Atualizar Reserva Com Sucesso" line="40">
+<kw name="Autenticar Usuario" owner="keywords">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-05-26T17:30:43.363845" level="INFO">${body} = {'username': 'admin', 'password': 'password123'}</msg>
+<var>${body}</var>
+<arg>username=${USERNAME}</arg>
+<arg>password=${PASSWORD}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.362977" elapsed="0.001227"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-05-26T17:30:43.515769" level="INFO">POST Request : url=https://restful-booker.herokuapp.com/auth 
+ path_url=/auth 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '48', 'Content-Type': 'application/json'} 
+ body=b'{"username": "admin", "password": "password123"}' 
+ </msg>
+<msg time="2025-05-26T17:30:43.516528" level="INFO">POST Response : url=https://restful-booker.herokuapp.com/auth 
+ status=200, reason=OK 
+ headers={'Content-Length': '27', 'Content-Type': 'application/json; charset=utf-8', 'Date': 'Mon, 26 May 2025 20:30:42 GMT', 'Etag': 'W/"1b-Ghu2cCkdN2lqj7KqFCgTpnUk9RE"', 'Nel': '{"report_to":"heroku-nel","response_headers":["Via"],"max_age":3600,"success_fraction":0.01,"failure_fraction":0.1}', 'Report-To': '{"group":"heroku-nel","endpoints":[{"url":"https://nel.heroku.com/reports?s=AeEZWu%2Ft8RTFwKN272SMi%2FRWsYe1%2F%2Fwef%2F%2BNtFRNbK0%3D\\u0026sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add\\u0026ts=1748291442"}],"max_age":3600}', 'Reporting-Endpoints': 'heroku-nel="https://nel.heroku.com/reports?s=AeEZWu%2Ft8RTFwKN272SMi%2FRWsYe1%2F%2Fwef%2F%2BNtFRNbK0%3D&amp;sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&amp;ts=1748291442"', 'Server': 'Heroku', 'Via': '1.1 heroku-router', 'X-Powered-By': 'Express'} 
+ body={"token":"fdcdef1f8fe69ee"} 
+ </msg>
+<msg time="2025-05-26T17:30:43.517099" level="INFO">/home/marcosdev03/miniconda3/envs/ambiente_compasso/lib/python3.13/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host 'restful-booker.herokuapp.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(</msg>
+<msg time="2025-05-26T17:30:43.518934" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>restful</arg>
+<arg>/auth</arg>
+<arg>json=${body}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.364649" elapsed="0.154721"/>
+</kw>
+<kw name="Set Test Variable" owner="BuiltIn">
+<msg time="2025-05-26T17:30:43.521446" level="INFO">${AUTH_RESPONSE} = &lt;Response [200]&gt;</msg>
+<arg>${AUTH_RESPONSE}</arg>
+<arg>${response}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.519848" elapsed="0.001903"/>
+</kw>
+<status status="PASS" start="2025-05-26T17:30:43.361359" elapsed="0.160663"/>
+</kw>
+<kw name="Extrair Token" owner="keywords">
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2025-05-26T17:30:43.526753" level="INFO">${token} = fdcdef1f8fe69ee</msg>
+<var>${token}</var>
+<arg>${response.json()}</arg>
+<arg>token</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.524430" elapsed="0.002882"/>
+</kw>
+<kw name="Set Test Variable" owner="BuiltIn">
+<msg time="2025-05-26T17:30:43.529197" level="INFO">${token} = fdcdef1f8fe69ee</msg>
+<arg>${token}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.528336" elapsed="0.001288"/>
+</kw>
+<return>
+<value>${token}</value>
+<status status="PASS" start="2025-05-26T17:30:43.529998" elapsed="0.000345"/>
+</return>
+<msg time="2025-05-26T17:30:43.530913" level="INFO">${token} = fdcdef1f8fe69ee</msg>
+<var>${token}</var>
+<arg>${AUTH_RESPONSE}</arg>
+<status status="PASS" start="2025-05-26T17:30:43.522799" elapsed="0.008490"/>
+</kw>
+<kw name="Montar Corpo Da Reserva" owner="keywords">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-05-26T17:30:43.538042" level="INFO">${bookingdates} = {'checkin': '2018-01-01', 'checkout': '2019-01-01'}</msg>
+<var>${bookingdates}</var>
+<arg>checkin=2018-01-01</arg>
+<arg>checkout=2019-01-01</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.537400" elapsed="0.000866"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-05-26T17:30:43.539671" level="INFO">${body} = {'firstname': 'jim', 'lastname': 'brown', 'totalprice': 111, 'depositpaid': True, 'bookingdates': {'checkin': '2018-01-01', 'checkout': '2019-01-01'}, 'additionalneeds': 'Breakfast'}</msg>
+<var>${body}</var>
+<arg>firstname=jim</arg>
+<arg>lastname=brown</arg>
+<arg>totalprice=${111}</arg>
+<arg>depositpaid=${True}</arg>
+<arg>bookingdates=${bookingdates}</arg>
+<arg>additionalneeds=Breakfast</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.538566" elapsed="0.002673"/>
+</kw>
+<kw name="Set Test Variable" owner="BuiltIn">
+<msg time="2025-05-26T17:30:43.543957" level="INFO">${POST_BODY} = {'firstname': 'jim', 'lastname': 'brown', 'totalprice': 111, 'depositpaid': True, 'bookingdates': {'checkin': '2018-01-01', 'checkout': '2019-01-01'}, 'additionalneeds': 'Breakfast'}</msg>
+<arg>${POST_BODY}</arg>
+<arg>${body}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.542348" elapsed="0.002058"/>
+</kw>
+<status status="PASS" start="2025-05-26T17:30:43.536150" elapsed="0.008489"/>
+</kw>
+<kw name="Enviar Requisicao POST Reserva" owner="keywords">
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-05-26T17:30:43.546976" level="INFO">{'firstname': 'jim', 'lastname': 'brown', 'totalprice': 111, 'depositpaid': True, 'bookingdates': {'checkin': '2018-01-01', 'checkout': '2019-01-01'}, 'additionalneeds': 'Breakfast'}</msg>
+<arg>${POST_BODY}</arg>
+<arg>console=yes</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.546531" elapsed="0.000793"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-05-26T17:30:43.696450" level="INFO">POST Request : url=https://restful-booker.herokuapp.com/booking 
+ path_url=/booking 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '182', 'Content-Type': 'application/json'} 
+ body=b'{"firstname": "jim", "lastname": "brown", "totalprice": 111, "depositpaid": true, "bookingdates": {"checkin": "2018-01-01", "checkout": "2019-01-01"}, "additionalneeds": "Breakfast"}' 
+ </msg>
+<msg time="2025-05-26T17:30:43.697376" level="INFO">POST Response : url=https://restful-booker.herokuapp.com/booking 
+ status=200, reason=OK 
+ headers={'Content-Length': '195', 'Content-Type': 'application/json; charset=utf-8', 'Date': 'Mon, 26 May 2025 20:30:42 GMT', 'Etag': 'W/"c3-I3Fkk7FNnVWrgQpbEeIVge4/rX8"', 'Nel': '{"report_to":"heroku-nel","response_headers":["Via"],"max_age":3600,"success_fraction":0.01,"failure_fraction":0.1}', 'Report-To': '{"group":"heroku-nel","endpoints":[{"url":"https://nel.heroku.com/reports?s=AeEZWu%2Ft8RTFwKN272SMi%2FRWsYe1%2F%2Fwef%2F%2BNtFRNbK0%3D\\u0026sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add\\u0026ts=1748291442"}],"max_age":3600}', 'Reporting-Endpoints': 'heroku-nel="https://nel.heroku.com/reports?s=AeEZWu%2Ft8RTFwKN272SMi%2FRWsYe1%2F%2Fwef%2F%2BNtFRNbK0%3D&amp;sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&amp;ts=1748291442"', 'Server': 'Heroku', 'Via': '1.1 heroku-router', 'X-Powered-By': 'Express'} 
+ body={"bookingid":22,"booking":{"firstname":"jim","lastname":"brown","totalprice":111,"depositpaid":true,"bookingdates":{"checkin":"2018-01-01","checkout":"2019-01-01"},"additionalneeds":"Breakfast"}} 
+ </msg>
+<msg time="2025-05-26T17:30:43.698057" level="INFO">/home/marcosdev03/miniconda3/envs/ambiente_compasso/lib/python3.13/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host 'restful-booker.herokuapp.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(</msg>
+<msg time="2025-05-26T17:30:43.698909" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>restful</arg>
+<arg>/booking</arg>
+<arg>json=${POST_BODY}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.547683" elapsed="0.151490"/>
+</kw>
+<kw name="Set Test Variable" owner="BuiltIn">
+<msg time="2025-05-26T17:30:43.701530" level="INFO">${POST_RESPONSE} = &lt;Response [200]&gt;</msg>
+<arg>${POST_RESPONSE}</arg>
+<arg>${response}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.699671" elapsed="0.002174"/>
+</kw>
+<status status="PASS" start="2025-05-26T17:30:43.545909" elapsed="0.156344"/>
+</kw>
+<kw name="Extrair BookingID" owner="keywords">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-05-26T17:30:43.706740" level="INFO">${dados_da_reserva} = {'bookingid': 22, 'booking': {'firstname': 'jim', 'lastname': 'brown', 'totalprice': 111, 'depositpaid': True, 'bookingdates': {'checkin': '2018-01-01', 'checkout': '2019-01-01'}, 'additionalneeds': '...</msg>
+<var>${dados_da_reserva}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.704738" elapsed="0.002464"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-05-26T17:30:43.710076" level="INFO">{'bookingid': 22, 'booking': {'firstname': 'jim', 'lastname': 'brown', 'totalprice': 111, 'depositpaid': True, 'bookingdates': {'checkin': '2018-01-01', 'checkout': '2019-01-01'}, 'additionalneeds': 'Breakfast'}}</msg>
+<arg>${dados_da_reserva}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.707721" elapsed="0.003036"/>
+</kw>
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2025-05-26T17:30:43.712716" level="INFO">${id_da_reserva} = 22</msg>
+<var>${id_da_reserva}</var>
+<arg>${dados_da_reserva}</arg>
+<arg>bookingid</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.711429" elapsed="0.002044"/>
+</kw>
+<kw name="Set Test Variable" owner="BuiltIn">
+<msg time="2025-05-26T17:30:43.717876" level="INFO">${booking_id} = 22</msg>
+<arg>${booking_id}</arg>
+<arg>${id_da_reserva}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.714263" elapsed="0.004322"/>
+</kw>
+<arg>${POST_RESPONSE}</arg>
+<status status="PASS" start="2025-05-26T17:30:43.703077" elapsed="0.015884"/>
+</kw>
+<kw name="Montar Corpo Atualizado" owner="keywords">
+<kw name="Generate Random String" owner="String">
+<msg time="2025-05-26T17:30:43.727304" level="INFO">${primeiro_nome_aleatorio} = LmDPHC</msg>
+<var>${primeiro_nome_aleatorio}</var>
+<arg>6</arg>
+<arg>[LETTERS]</arg>
+<doc>Generates a string with a desired ``length`` from the given ``chars``.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.726072" elapsed="0.001709"/>
+</kw>
+<kw name="Generate Random String" owner="String">
+<msg time="2025-05-26T17:30:43.732457" level="INFO">${sobre_nome_aleatorio} = TQrtCb</msg>
+<var>${sobre_nome_aleatorio}</var>
+<arg>6</arg>
+<arg>[LETTERS]</arg>
+<doc>Generates a string with a desired ``length`` from the given ``chars``.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.728817" elapsed="0.004276"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-05-26T17:30:43.734493" level="INFO">${preco_aleatorio} = 4547</msg>
+<var>${preco_aleatorio}</var>
+<arg>random.randint(1000, 9999)</arg>
+<arg>modules=random</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.733793" elapsed="0.000955"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-05-26T17:30:43.735561" level="INFO">${periodo_da_reserva} = {'checkin': '2023-05-01', 'checkout': '2023-05-10'}</msg>
+<var>${periodo_da_reserva}</var>
+<arg>checkin=2023-05-01</arg>
+<arg>checkout=2023-05-10</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.735035" elapsed="0.001474"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-05-26T17:30:43.737929" level="INFO">${dados_reserva_atualizado} = {'firstname': 'LmDPHC', 'lastname': 'TQrtCb', 'totalprice': 4547, 'depositpaid': False, 'bookingdates': {'checkin': '2023-05-01', 'checkout': '2023-05-10'}, 'additionalneeds': 'Sem pedidos'}</msg>
+<var>${dados_reserva_atualizado}</var>
+<arg>firstname=${primeiro_nome_aleatorio}</arg>
+<arg>lastname=${sobre_nome_aleatorio}</arg>
+<arg>totalprice=${preco_aleatorio}</arg>
+<arg>depositpaid=${False}</arg>
+<arg>bookingdates=${periodo_da_reserva}</arg>
+<arg>additionalneeds=Sem pedidos</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.736924" elapsed="0.002093"/>
+</kw>
+<kw name="Set Test Variable" owner="BuiltIn">
+<msg time="2025-05-26T17:30:43.741787" level="INFO">${PUT_BODY} = {'firstname': 'LmDPHC', 'lastname': 'TQrtCb', 'totalprice': 4547, 'depositpaid': False, 'bookingdates': {'checkin': '2023-05-01', 'checkout': '2023-05-10'}, 'additionalneeds': 'Sem pedidos'}</msg>
+<arg>${PUT_BODY}</arg>
+<arg>${dados_reserva_atualizado}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.740101" elapsed="0.001971"/>
+</kw>
+<status status="PASS" start="2025-05-26T17:30:43.724840" elapsed="0.017388"/>
+</kw>
+<kw name="Enviar PUT Com Token" owner="keywords">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-05-26T17:30:43.743514" level="INFO">${headers} = {'Cookie': 'token=fdcdef1f8fe69ee'}</msg>
+<var>${headers}</var>
+<arg>Cookie=token=${token}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.743097" elapsed="0.000563"/>
+</kw>
+<kw name="PUT On Session" owner="RequestsLibrary">
+<msg time="2025-05-26T17:30:43.887582" level="INFO">PUT Request : url=https://restful-booker.herokuapp.com/booking/22 
+ path_url=/booking/22 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Cookie': 'token=fdcdef1f8fe69ee', 'Content-Length': '190', 'Content-Type': 'application/json'} 
+ body=b'{"firstname": "LmDPHC", "lastname": "TQrtCb", "totalprice": 4547, "depositpaid": false, "bookingdates": {"checkin": "2023-05-01", "checkout": "2023-05-10"}, "additionalneeds": "Sem pedidos"}' 
+ </msg>
+<msg time="2025-05-26T17:30:43.888040" level="INFO">PUT Response : url=https://restful-booker.herokuapp.com/booking/22 
+ status=200, reason=OK 
+ headers={'Content-Length': '176', 'Content-Type': 'application/json; charset=utf-8', 'Date': 'Mon, 26 May 2025 20:30:43 GMT', 'Etag': 'W/"b0-YhoJLRYx6nkADBYCq1nzz2dYkVU"', 'Nel': '{"report_to":"heroku-nel","response_headers":["Via"],"max_age":3600,"success_fraction":0.01,"failure_fraction":0.1}', 'Report-To': '{"group":"heroku-nel","endpoints":[{"url":"https://nel.heroku.com/reports?s=maySVBKuXrLJnMou6Vq26Y%2FHiakqApWVQmX5%2FuOCf4Q%3D\\u0026sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add\\u0026ts=1748291443"}],"max_age":3600}', 'Reporting-Endpoints': 'heroku-nel="https://nel.heroku.com/reports?s=maySVBKuXrLJnMou6Vq26Y%2FHiakqApWVQmX5%2FuOCf4Q%3D&amp;sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&amp;ts=1748291443"', 'Server': 'Heroku', 'Via': '1.1 heroku-router', 'X-Powered-By': 'Express'} 
+ body={"firstname":"LmDPHC","lastname":"TQrtCb","totalprice":4547,"depositpaid":false,"bookingdates":{"checkin":"2023-05-01","checkout":"2023-05-10"},"additionalneeds":"Sem pedidos"} 
+ </msg>
+<msg time="2025-05-26T17:30:43.888169" level="INFO">/home/marcosdev03/miniconda3/envs/ambiente_compasso/lib/python3.13/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host 'restful-booker.herokuapp.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(</msg>
+<msg time="2025-05-26T17:30:43.888368" level="INFO">${resposta_put} = &lt;Response [200]&gt;</msg>
+<var>${resposta_put}</var>
+<arg>restful</arg>
+<arg>/booking/${BOOKING_ID}</arg>
+<arg>json=${PUT_BODY}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.743839" elapsed="0.144605"/>
+</kw>
+<kw name="Set Test Variable" owner="BuiltIn">
+<msg time="2025-05-26T17:30:43.889344" level="INFO">${PUT_RESPONSE} = &lt;Response [200]&gt;</msg>
+<arg>${PUT_RESPONSE}</arg>
+<arg>${resposta_put}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.888647" elapsed="0.000814"/>
+</kw>
+<status status="PASS" start="2025-05-26T17:30:43.742608" elapsed="0.146951"/>
+</kw>
+<kw name="Verificar Status Code PUT 200" owner="keywords">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-05-26T17:30:43.891204" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${resposta_do_enviar_put.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.890759" elapsed="0.000583"/>
+</kw>
+<arg>${PUT_RESPONSE}</arg>
+<status status="PASS" start="2025-05-26T17:30:43.890349" elapsed="0.001098"/>
+</kw>
+<status status="PASS" start="2025-05-26T17:30:43.359123" elapsed="0.534169"/>
+</test>
+<test id="s1-t6" name="DELET - Deletar Reserva Com Sucesso" line="51">
+<kw name="Autenticar Usuario" owner="keywords">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-05-26T17:30:43.896567" level="INFO">${body} = {'username': 'admin', 'password': 'password123'}</msg>
+<var>${body}</var>
+<arg>username=${USERNAME}</arg>
+<arg>password=${PASSWORD}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.896166" elapsed="0.000542"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-05-26T17:30:44.040833" level="INFO">POST Request : url=https://restful-booker.herokuapp.com/auth 
+ path_url=/auth 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '48', 'Content-Type': 'application/json'} 
+ body=b'{"username": "admin", "password": "password123"}' 
+ </msg>
+<msg time="2025-05-26T17:30:44.041464" level="INFO">POST Response : url=https://restful-booker.herokuapp.com/auth 
+ status=200, reason=OK 
+ headers={'Content-Length': '27', 'Content-Type': 'application/json; charset=utf-8', 'Date': 'Mon, 26 May 2025 20:30:43 GMT', 'Etag': 'W/"1b-x0tmw5vCiuodYGJ/cPirVmA24X8"', 'Nel': '{"report_to":"heroku-nel","response_headers":["Via"],"max_age":3600,"success_fraction":0.01,"failure_fraction":0.1}', 'Report-To': '{"group":"heroku-nel","endpoints":[{"url":"https://nel.heroku.com/reports?s=maySVBKuXrLJnMou6Vq26Y%2FHiakqApWVQmX5%2FuOCf4Q%3D\\u0026sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add\\u0026ts=1748291443"}],"max_age":3600}', 'Reporting-Endpoints': 'heroku-nel="https://nel.heroku.com/reports?s=maySVBKuXrLJnMou6Vq26Y%2FHiakqApWVQmX5%2FuOCf4Q%3D&amp;sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&amp;ts=1748291443"', 'Server': 'Heroku', 'Via': '1.1 heroku-router', 'X-Powered-By': 'Express'} 
+ body={"token":"1a4fa6c288cf05d"} 
+ </msg>
+<msg time="2025-05-26T17:30:44.041914" level="INFO">/home/marcosdev03/miniconda3/envs/ambiente_compasso/lib/python3.13/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host 'restful-booker.herokuapp.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(</msg>
+<msg time="2025-05-26T17:30:44.042460" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>restful</arg>
+<arg>/auth</arg>
+<arg>json=${body}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-05-26T17:30:43.896884" elapsed="0.145800"/>
+</kw>
+<kw name="Set Test Variable" owner="BuiltIn">
+<msg time="2025-05-26T17:30:44.044936" level="INFO">${AUTH_RESPONSE} = &lt;Response [200]&gt;</msg>
+<arg>${AUTH_RESPONSE}</arg>
+<arg>${response}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<status status="PASS" start="2025-05-26T17:30:44.043151" elapsed="0.002073"/>
+</kw>
+<status status="PASS" start="2025-05-26T17:30:43.895725" elapsed="0.151436"/>
+</kw>
+<kw name="Extrair Token" owner="keywords">
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2025-05-26T17:30:44.052301" level="INFO">${token} = 1a4fa6c288cf05d</msg>
+<var>${token}</var>
+<arg>${response.json()}</arg>
+<arg>token</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2025-05-26T17:30:44.050436" elapsed="0.002263"/>
+</kw>
+<kw name="Set Test Variable" owner="BuiltIn">
+<msg time="2025-05-26T17:30:44.053924" level="INFO">${token} = 1a4fa6c288cf05d</msg>
+<arg>${token}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<status status="PASS" start="2025-05-26T17:30:44.053358" elapsed="0.000827"/>
+</kw>
+<return>
+<value>${token}</value>
+<status status="PASS" start="2025-05-26T17:30:44.054380" elapsed="0.000177"/>
+</return>
+<msg time="2025-05-26T17:30:44.054935" level="INFO">${token} = 1a4fa6c288cf05d</msg>
+<var>${token}</var>
+<arg>${AUTH_RESPONSE}</arg>
+<status status="PASS" start="2025-05-26T17:30:44.048977" elapsed="0.007102"/>
+</kw>
+<kw name="Montar Corpo Da Reserva" owner="keywords">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-05-26T17:30:44.059850" level="INFO">${bookingdates} = {'checkin': '2018-01-01', 'checkout': '2019-01-01'}</msg>
+<var>${bookingdates}</var>
+<arg>checkin=2018-01-01</arg>
+<arg>checkout=2019-01-01</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-05-26T17:30:44.059326" elapsed="0.000741"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-05-26T17:30:44.061466" level="INFO">${body} = {'firstname': 'jim', 'lastname': 'brown', 'totalprice': 111, 'depositpaid': True, 'bookingdates': {'checkin': '2018-01-01', 'checkout': '2019-01-01'}, 'additionalneeds': 'Breakfast'}</msg>
+<var>${body}</var>
+<arg>firstname=jim</arg>
+<arg>lastname=brown</arg>
+<arg>totalprice=${111}</arg>
+<arg>depositpaid=${True}</arg>
+<arg>bookingdates=${bookingdates}</arg>
+<arg>additionalneeds=Breakfast</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-05-26T17:30:44.060365" elapsed="0.001626"/>
+</kw>
+<kw name="Set Test Variable" owner="BuiltIn">
+<msg time="2025-05-26T17:30:44.063489" level="INFO">${POST_BODY} = {'firstname': 'jim', 'lastname': 'brown', 'totalprice': 111, 'depositpaid': True, 'bookingdates': {'checkin': '2018-01-01', 'checkout': '2019-01-01'}, 'additionalneeds': 'Breakfast'}</msg>
+<arg>${POST_BODY}</arg>
+<arg>${body}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<status status="PASS" start="2025-05-26T17:30:44.062332" elapsed="0.001430"/>
+</kw>
+<status status="PASS" start="2025-05-26T17:30:44.058409" elapsed="0.006037"/>
+</kw>
+<kw name="Enviar Requisicao POST Reserva" owner="keywords">
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-05-26T17:30:44.067792" level="INFO">{'firstname': 'jim', 'lastname': 'brown', 'totalprice': 111, 'depositpaid': True, 'bookingdates': {'checkin': '2018-01-01', 'checkout': '2019-01-01'}, 'additionalneeds': 'Breakfast'}</msg>
+<arg>${POST_BODY}</arg>
+<arg>console=yes</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-05-26T17:30:44.067340" elapsed="0.000842"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-05-26T17:30:44.215473" level="INFO">POST Request : url=https://restful-booker.herokuapp.com/booking 
+ path_url=/booking 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '182', 'Content-Type': 'application/json'} 
+ body=b'{"firstname": "jim", "lastname": "brown", "totalprice": 111, "depositpaid": true, "bookingdates": {"checkin": "2018-01-01", "checkout": "2019-01-01"}, "additionalneeds": "Breakfast"}' 
+ </msg>
+<msg time="2025-05-26T17:30:44.216078" level="INFO">POST Response : url=https://restful-booker.herokuapp.com/booking 
+ status=200, reason=OK 
+ headers={'Content-Length': '195', 'Content-Type': 'application/json; charset=utf-8', 'Date': 'Mon, 26 May 2025 20:30:43 GMT', 'Etag': 'W/"c3-CTLy02ryYJ/8srzOKRgbJ42z86A"', 'Nel': '{"report_to":"heroku-nel","response_headers":["Via"],"max_age":3600,"success_fraction":0.01,"failure_fraction":0.1}', 'Report-To': '{"group":"heroku-nel","endpoints":[{"url":"https://nel.heroku.com/reports?s=maySVBKuXrLJnMou6Vq26Y%2FHiakqApWVQmX5%2FuOCf4Q%3D\\u0026sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add\\u0026ts=1748291443"}],"max_age":3600}', 'Reporting-Endpoints': 'heroku-nel="https://nel.heroku.com/reports?s=maySVBKuXrLJnMou6Vq26Y%2FHiakqApWVQmX5%2FuOCf4Q%3D&amp;sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&amp;ts=1748291443"', 'Server': 'Heroku', 'Via': '1.1 heroku-router', 'X-Powered-By': 'Express'} 
+ body={"bookingid":27,"booking":{"firstname":"jim","lastname":"brown","totalprice":111,"depositpaid":true,"bookingdates":{"checkin":"2018-01-01","checkout":"2019-01-01"},"additionalneeds":"Breakfast"}} 
+ </msg>
+<msg time="2025-05-26T17:30:44.216599" level="INFO">/home/marcosdev03/miniconda3/envs/ambiente_compasso/lib/python3.13/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host 'restful-booker.herokuapp.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(</msg>
+<msg time="2025-05-26T17:30:44.217218" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>restful</arg>
+<arg>/booking</arg>
+<arg>json=${POST_BODY}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-05-26T17:30:44.068434" elapsed="0.149038"/>
+</kw>
+<kw name="Set Test Variable" owner="BuiltIn">
+<msg time="2025-05-26T17:30:44.222096" level="INFO">${POST_RESPONSE} = &lt;Response [200]&gt;</msg>
+<arg>${POST_RESPONSE}</arg>
+<arg>${response}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<status status="PASS" start="2025-05-26T17:30:44.218099" elapsed="0.004439"/>
+</kw>
+<status status="PASS" start="2025-05-26T17:30:44.066501" elapsed="0.157274"/>
+</kw>
+<kw name="Extrair BookingID" owner="keywords">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-05-26T17:30:44.228998" level="INFO">${dados_da_reserva} = {'bookingid': 27, 'booking': {'firstname': 'jim', 'lastname': 'brown', 'totalprice': 111, 'depositpaid': True, 'bookingdates': {'checkin': '2018-01-01', 'checkout': '2019-01-01'}, 'additionalneeds': '...</msg>
+<var>${dados_da_reserva}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-05-26T17:30:44.226491" elapsed="0.003005"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-05-26T17:30:44.231523" level="INFO">{'bookingid': 27, 'booking': {'firstname': 'jim', 'lastname': 'brown', 'totalprice': 111, 'depositpaid': True, 'bookingdates': {'checkin': '2018-01-01', 'checkout': '2019-01-01'}, 'additionalneeds': 'Breakfast'}}</msg>
+<arg>${dados_da_reserva}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-05-26T17:30:44.230591" elapsed="0.001417"/>
+</kw>
+<kw name="Get From Dictionary" owner="Collections">
+<msg time="2025-05-26T17:30:44.233923" level="INFO">${id_da_reserva} = 27</msg>
+<var>${id_da_reserva}</var>
+<arg>${dados_da_reserva}</arg>
+<arg>bookingid</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="PASS" start="2025-05-26T17:30:44.232589" elapsed="0.001854"/>
+</kw>
+<kw name="Set Test Variable" owner="BuiltIn">
+<msg time="2025-05-26T17:30:44.238905" level="INFO">${booking_id} = 27</msg>
+<arg>${booking_id}</arg>
+<arg>${id_da_reserva}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<status status="PASS" start="2025-05-26T17:30:44.234890" elapsed="0.004507"/>
+</kw>
+<arg>${POST_RESPONSE}</arg>
+<status status="PASS" start="2025-05-26T17:30:44.224912" elapsed="0.014879"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-05-26T17:30:44.244046" level="INFO">${cookie} = token=1a4fa6c288cf05d</msg>
+<var>${cookie}</var>
+<arg>token=${token}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-05-26T17:30:44.243145" elapsed="0.001147"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-05-26T17:30:44.247310" level="INFO">${headers} = {'Cookie': 'token=1a4fa6c288cf05d'}</msg>
+<var>${headers}</var>
+<arg>Cookie=${cookie}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-05-26T17:30:44.246297" elapsed="0.001363"/>
+</kw>
+<kw name="DELETE On Session" owner="RequestsLibrary">
+<msg time="2025-05-26T17:30:44.395724" level="INFO">DELETE Request : url=https://restful-booker.herokuapp.com/booking/27 
+ path_url=/booking/27 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Cookie': 'token=1a4fa6c288cf05d', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg time="2025-05-26T17:30:44.396192" level="INFO">DELETE Response : url=https://restful-booker.herokuapp.com/booking/27 
+ status=201, reason=Created 
+ headers={'Content-Length': '7', 'Content-Type': 'text/plain; charset=utf-8', 'Date': 'Mon, 26 May 2025 20:30:43 GMT', 'Etag': 'W/"7-rM9AyJuqT6iOan/xHh+AW+7K/T8"', 'Nel': '{"report_to":"heroku-nel","response_headers":["Via"],"max_age":3600,"success_fraction":0.01,"failure_fraction":0.1}', 'Report-To': '{"group":"heroku-nel","endpoints":[{"url":"https://nel.heroku.com/reports?s=maySVBKuXrLJnMou6Vq26Y%2FHiakqApWVQmX5%2FuOCf4Q%3D\\u0026sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add\\u0026ts=1748291443"}],"max_age":3600}', 'Reporting-Endpoints': 'heroku-nel="https://nel.heroku.com/reports?s=maySVBKuXrLJnMou6Vq26Y%2FHiakqApWVQmX5%2FuOCf4Q%3D&amp;sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&amp;ts=1748291443"', 'Server': 'Heroku', 'Via': '1.1 heroku-router', 'X-Powered-By': 'Express'} 
+ body=Created 
+ </msg>
+<msg time="2025-05-26T17:30:44.396515" level="INFO">/home/marcosdev03/miniconda3/envs/ambiente_compasso/lib/python3.13/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host 'restful-booker.herokuapp.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(</msg>
+<msg time="2025-05-26T17:30:44.396915" level="INFO">${DELETE_RESPONSE} = &lt;Response [201]&gt;</msg>
+<var>${DELETE_RESPONSE}</var>
+<arg>restful</arg>
+<arg>/booking/${booking_id}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a DELETE request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-05-26T17:30:44.248842" elapsed="0.148268"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-05-26T17:30:44.398605" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${DELETE_RESPONSE.status_code}</arg>
+<arg>201</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-05-26T17:30:44.397585" elapsed="0.001719"/>
+</kw>
+<status status="PASS" start="2025-05-26T17:30:43.895060" elapsed="0.507073"/>
+</test>
+<test id="s1-t7" name="EBUG - Ver Estrutura da Resposta" line="63">
+<kw name="Montar Corpo Da Reserva" owner="keywords">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-05-26T17:30:44.405787" level="INFO">${bookingdates} = {'checkin': '2018-01-01', 'checkout': '2019-01-01'}</msg>
+<var>${bookingdates}</var>
+<arg>checkin=2018-01-01</arg>
+<arg>checkout=2019-01-01</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-05-26T17:30:44.405260" elapsed="0.000801"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-05-26T17:30:44.408403" level="INFO">${body} = {'firstname': 'jim', 'lastname': 'brown', 'totalprice': 111, 'depositpaid': True, 'bookingdates': {'checkin': '2018-01-01', 'checkout': '2019-01-01'}, 'additionalneeds': 'Breakfast'}</msg>
+<var>${body}</var>
+<arg>firstname=jim</arg>
+<arg>lastname=brown</arg>
+<arg>totalprice=${111}</arg>
+<arg>depositpaid=${True}</arg>
+<arg>bookingdates=${bookingdates}</arg>
+<arg>additionalneeds=Breakfast</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-05-26T17:30:44.406366" elapsed="0.002479"/>
+</kw>
+<kw name="Set Test Variable" owner="BuiltIn">
+<msg time="2025-05-26T17:30:44.412649" level="INFO">${POST_BODY} = {'firstname': 'jim', 'lastname': 'brown', 'totalprice': 111, 'depositpaid': True, 'bookingdates': {'checkin': '2018-01-01', 'checkout': '2019-01-01'}, 'additionalneeds': 'Breakfast'}</msg>
+<arg>${POST_BODY}</arg>
+<arg>${body}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<status status="PASS" start="2025-05-26T17:30:44.410829" elapsed="0.002289"/>
+</kw>
+<status status="PASS" start="2025-05-26T17:30:44.404573" elapsed="0.008877"/>
+</kw>
+<kw name="Enviar Requisicao POST Reserva" owner="keywords">
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-05-26T17:30:44.415795" level="INFO">{'firstname': 'jim', 'lastname': 'brown', 'totalprice': 111, 'depositpaid': True, 'bookingdates': {'checkin': '2018-01-01', 'checkout': '2019-01-01'}, 'additionalneeds': 'Breakfast'}</msg>
+<arg>${POST_BODY}</arg>
+<arg>console=yes</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-05-26T17:30:44.415233" elapsed="0.002353"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-05-26T17:30:44.563502" level="INFO">POST Request : url=https://restful-booker.herokuapp.com/booking 
+ path_url=/booking 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '182', 'Content-Type': 'application/json'} 
+ body=b'{"firstname": "jim", "lastname": "brown", "totalprice": 111, "depositpaid": true, "bookingdates": {"checkin": "2018-01-01", "checkout": "2019-01-01"}, "additionalneeds": "Breakfast"}' 
+ </msg>
+<msg time="2025-05-26T17:30:44.563959" level="INFO">POST Response : url=https://restful-booker.herokuapp.com/booking 
+ status=200, reason=OK 
+ headers={'Content-Length': '195', 'Content-Type': 'application/json; charset=utf-8', 'Date': 'Mon, 26 May 2025 20:30:43 GMT', 'Etag': 'W/"c3-5gFdEuXy4uOukQnpls1Kepl2EWA"', 'Nel': '{"report_to":"heroku-nel","response_headers":["Via"],"max_age":3600,"success_fraction":0.01,"failure_fraction":0.1}', 'Report-To': '{"group":"heroku-nel","endpoints":[{"url":"https://nel.heroku.com/reports?s=maySVBKuXrLJnMou6Vq26Y%2FHiakqApWVQmX5%2FuOCf4Q%3D\\u0026sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add\\u0026ts=1748291443"}],"max_age":3600}', 'Reporting-Endpoints': 'heroku-nel="https://nel.heroku.com/reports?s=maySVBKuXrLJnMou6Vq26Y%2FHiakqApWVQmX5%2FuOCf4Q%3D&amp;sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&amp;ts=1748291443"', 'Server': 'Heroku', 'Via': '1.1 heroku-router', 'X-Powered-By': 'Express'} 
+ body={"bookingid":32,"booking":{"firstname":"jim","lastname":"brown","totalprice":111,"depositpaid":true,"bookingdates":{"checkin":"2018-01-01","checkout":"2019-01-01"},"additionalneeds":"Breakfast"}} 
+ </msg>
+<msg time="2025-05-26T17:30:44.564193" level="INFO">/home/marcosdev03/miniconda3/envs/ambiente_compasso/lib/python3.13/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host 'restful-booker.herokuapp.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(</msg>
+<msg time="2025-05-26T17:30:44.564539" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>restful</arg>
+<arg>/booking</arg>
+<arg>json=${POST_BODY}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-05-26T17:30:44.418195" elapsed="0.146516"/>
+</kw>
+<kw name="Set Test Variable" owner="BuiltIn">
+<msg time="2025-05-26T17:30:44.567042" level="INFO">${POST_RESPONSE} = &lt;Response [200]&gt;</msg>
+<arg>${POST_RESPONSE}</arg>
+<arg>${response}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<status status="PASS" start="2025-05-26T17:30:44.565023" elapsed="0.002237"/>
+</kw>
+<status status="PASS" start="2025-05-26T17:30:44.414610" elapsed="0.152835"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-05-26T17:30:44.569449" level="INFO">${json} = {'bookingid': 32, 'booking': {'firstname': 'jim', 'lastname': 'brown', 'totalprice': 111, 'depositpaid': True, 'bookingdates': {'checkin': '2018-01-01', 'checkout': '2019-01-01'}, 'additionalneeds': '...</msg>
+<var>${json}</var>
+<arg>${POST_RESPONSE.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-05-26T17:30:44.568468" elapsed="0.001227"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-05-26T17:30:44.572112" level="INFO">{'bookingid': 32, 'booking': {'firstname': 'jim', 'lastname': 'brown', 'totalprice': 111, 'depositpaid': True, 'bookingdates': {'checkin': '2018-01-01', 'checkout': '2019-01-01'}, 'additionalneeds': 'Breakfast'}}</msg>
+<arg>${json}</arg>
+<arg>console=yes</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-05-26T17:30:44.571357" elapsed="0.001443"/>
+</kw>
+<status status="PASS" start="2025-05-26T17:30:44.403641" elapsed="0.169798"/>
+</test>
+<status status="PASS" start="2025-05-26T17:30:40.661408" elapsed="3.913656"/>
+</suite>
+<statistics>
+<total>
+<stat pass="7" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Test Api" id="s1" pass="7" fail="0" skip="0">Test Api</stat>
+</suite>
+</statistics>
+<errors>
+<msg time="2025-05-26T17:30:42.824555" level="WARN">Keyword 'RequestsLibrary.To Json' is deprecated. Please use ${resp.json()} instead. Have a look at the improved HTML output as pretty printing replacement.</msg>
+<msg time="2025-05-26T17:30:43.012255" level="WARN">Keyword 'RequestsLibrary.To Json' is deprecated. Please use ${resp.json()} instead. Have a look at the improved HTML output as pretty printing replacement.</msg>
+</errors>
+</robot>

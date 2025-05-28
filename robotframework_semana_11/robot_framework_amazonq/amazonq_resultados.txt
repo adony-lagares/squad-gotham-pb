@@ -1,0 +1,38 @@
+RELATÓRIO: USO DO AMAZONQ NA SPRINT 6
+
+Complementação dos testes:
+- O teste automatizado de login via API foi complementado com o uso de massa de dados 
+  dinâmica a partir de um arquivo massas.json.
+- A estrutura dos testes foi mantida utilizando o Robot Framework com iteração dinâmica 
+  dos usuários através de um loop :FOR.
+
+Uso do AmazonQ:
+- O AmazonQ foi utilizado para sugerir melhorias, revisar práticas de organização e 
+  propor uma padronização no uso de variáveis dinâmicas no projeto.
+- Durante a execução, a IA identificou os testes existentes e reconheceu a estrutura 
+  de login por massa de dados.
+
+Pontos onde o AmazonQ foi EFETIVO:
+- ✔️ Detectou corretamente o uso do JSON e sugeriu o caminho correto: $.usuarios[*].
+- ✔️ Recomendou o uso padronizado de variáveis como ${usuario['email']}.
+- ✔️ Propôs a criação de um devfile.yaml para futura automação do ambiente.
+- ✔️ Analisou corretamente os arquivos de teste e validou a presença da massa de dados.
+- ✔️ Auxiliou tecnicamente com exemplos de uso de dicionários e iteração.
+
+Pontos onde o AmazonQ NÃO FOI EFETIVO:
+- ❌ Tentou rodar testes usando pytest, mesmo sendo um projeto Robot Framework.
+- ❌ Aplicou alterações diretas em arquivos existentes, sem confirmação do usuário.
+- ❌ Substituiu o conteúdo de test_api.robot sem preservar o original.
+- ❌ Tentou adicionar arquivos que já existiam e estavam funcionando corretamente.
+
+Considerações finais:
+- Apesar de eficiente, o AmazonQ deve ser usado com cautela, pois pode aplicar mudanças 
+  diretamente nos arquivos sem controle do desenvolvedor.
+- É altamente recomendado usar uma branch separada para testes com IA e garantir que 
+  todos os arquivos estejam versionados com Git antes de interações com ferramentas automáticas.
+
+Conclusão:
+O uso do AmazonQ trouxe valor técnico, reforçou boas práticas e contribuiu com insights 
+sobre organização e reutilização de código. No entanto, a experiência mostrou que nenhuma 
+ferramenta substitui o discernimento do desenvolvedor. Usar IA com responsabilidade é 
+essencial para manter a integridade do projeto.
